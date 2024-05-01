@@ -3,51 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
-=======
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
-use Inertia\Inertia;
-use Inertia\Response;
->>>>>>> origin/main
 
 class PasswordResetLinkController extends Controller
 {
     /**
-<<<<<<< HEAD
-=======
-     * Display the password reset link request view.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('Auth/ForgotPassword', [
-            'status' => session('status'),
-        ]);
-    }
-
-    /**
->>>>>>> origin/main
      * Handle an incoming password reset link request.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-<<<<<<< HEAD
     public function store(Request $request): JsonResponse
     {
         $request->validate([
             'email' => ['required', 'email'],
-=======
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'email' => 'required|email',
->>>>>>> origin/main
         ]);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -57,7 +28,6 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-<<<<<<< HEAD
         if ($status != Password::RESET_LINK_SENT) {
             throw ValidationException::withMessages([
                 'email' => [__($status)],
@@ -65,14 +35,5 @@ class PasswordResetLinkController extends Controller
         }
 
         return response()->json(['status' => __($status)]);
-=======
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
->>>>>>> origin/main
     }
 }
