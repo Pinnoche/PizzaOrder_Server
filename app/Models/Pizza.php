@@ -16,4 +16,8 @@ class Pizza extends Model
         'type',
         'base'
     ];
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/main
