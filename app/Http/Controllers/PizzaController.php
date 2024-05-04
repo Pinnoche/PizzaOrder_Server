@@ -88,7 +88,7 @@ class PizzaController extends Controller
             return response()->json([
                 'status' => 404, 
                 'pizza' => 'No record found'
-            ]);
+            ], 404);
         }
 
     }

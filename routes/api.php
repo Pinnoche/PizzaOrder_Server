@@ -13,4 +13,4 @@ Route::post('/pizzas', [PizzaController::class, 'store']);
 Route::get('/pizzas/{id}', [PizzaController::class, 'show']);
 Route::get('/pizzas/{id}/edit', [PizzaController::class, 'edit']);
 Route::patch('/pizzas/{id}/edit', [PizzaController::class, 'update']);
-Route::delete('/pizzas/{id}/delete', [PizzaController::class, 'destroy']);
+Route::delete('/pizzas/{id}/delete', [PizzaController::class, 'destroy'])->middleware('auth');
