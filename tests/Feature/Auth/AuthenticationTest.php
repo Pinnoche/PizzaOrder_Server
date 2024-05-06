@@ -2,15 +2,6 @@
 
 use App\Models\User;
 
-<<<<<<< HEAD
-=======
-test('login screen can be rendered', function () {
-    $response = $this->get('/login');
-
-    $response->assertStatus(200);
-});
-
->>>>>>> origin/main
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
@@ -20,11 +11,7 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-<<<<<<< HEAD
     $response->assertNoContent();
-=======
-    $response->assertRedirect(route('dashboard', absolute: false));
->>>>>>> origin/main
 });
 
 test('users can not authenticate with invalid password', function () {
@@ -44,9 +31,5 @@ test('users can logout', function () {
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-<<<<<<< HEAD
     $response->assertNoContent();
-=======
-    $response->assertRedirect('/');
->>>>>>> origin/main
 });
