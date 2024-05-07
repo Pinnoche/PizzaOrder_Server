@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pizza;
 use Illuminate\Http\Request;
+use App\Http\Requests\PizzaRequest;
 use App\Http\Controllers\PizzaController;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,48 +18,65 @@ class PizzaController extends Controller
                 'status' => 200,
                 'pizzas' => $pizzas
             ], 200);
-        } else{
+        }
             return response()->json([
                 'status' => 404, 
                 'pizzas' => 'No record found'
             ]);
-        }
               
     }
 
-    public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-         'name' => 'required|string|max:200',
-         'type' => 'required',
-         'base' => 'required',
-        ]);
+    public function store(PizzaRequest $request) {
+        // $validator = Validator::make($request->all(), [
+        //  'name' => 'required|string|max:200',
+        //  'type' => 'required',
+        //  'base' => 'required',
+        // ]);
  
-        if($validator->fails()){
-         return response()->json([
-             'status' => 422,
-             'errors' => $validator->messages()
-         ], 422);
-        } else {
-             $pizza = Pizza::create([
-                 'name' => $request->name,
-                 'type' => $request->type,
-                 'base' => $request->base,
-             ]);
+        // if($validator->fails()){
+        //  return response()->json([
+        //      'status' => 422,
+        //      'errors' => $validator->messages()
+        //  ], 422);
+        // } else {
+        //      $pizza = Pizza::create([
+        //          'name' => $request->name,
+        //          'type' => $request->type,
+        //          'base' => $request->base,
+        //      ]);
  
-             if($pizza){
-                 return response()->json([
-                     'status' => 200,
-                     'message' => 'Pizza Uploaded Successfully'
-                 ], 200);
+        //      if($pizza){
+        //          return response()->json([
+        //              'status' => 200,
+        //              'message' => 'Pizza Uploaded Successfully'
+        //          ], 200);
                 
-                } else {
-                 return response()->json([
-                     'status' => 500,
-                     'message' => 'Somethng Went Wrong'
-                 ], 500);
-                }
-        }
+        //         } else {
+        //          return response()->json([
+        //              'status' => 500,
+        //              'message' => 'Somethng Went Wrong'
+        //          ], 500);
+        //         }
+        // }
         
+        $pizza = Pizza::create([
+                     'name' => $request->name,
+                     'type' => $request->type,
+                     'base' => $request->base,
+                 ]);
+     
+                 if($pizza){
+                     return response()->json([
+                         'status' => 200,
+                         'message' => 'Pizza Uploaded Successfully'
+                     ], 200);
+                    
+                    } 
+                     return response()->json([
+                         'status' => 500,
+                         'message' => 'Somethng Went Wrong'
+                     ], 500);
+                    
     }
 
     public function show($id){
@@ -68,12 +86,12 @@ class PizzaController extends Controller
                 'status' => 200,
                 'pizza' => $pizza
             ], 200);
-        } else {
+        }
             return response()->json([
                 'status' => 404, 
                 'stew' => 'No record found'
             ]);
-        }
+        
         
     }
 
@@ -93,39 +111,42 @@ class PizzaController extends Controller
 
     }
 
-    public function update(Request $request, int $id){
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:200',
-            'type' => 'required',
-            'base' => 'required',
-           ]);
+    public function update(PizzaRequest $request, int $id){
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string|max:200',
+        //     'type' => 'required',
+        //     'base' => 'required',
+        //    ]);
     
-           if($validator->fails()){
-            return response()->json([
-                'status' => 422,
-                'errors' => $validator->messages()
-            ], 422);
-           } else {
-                $pizza = Pizza::find($id);
-    
-                if($pizza){
-                    $pizza->update([
-                        'name' => $request->name,
-                        'type' => $request->type,
-                        'base' => $request->base
-                    ]);
+        //    if($validator->fails()){
+        //     return response()->json([
+        //         'status' => 422,
+        //         'errors' => $validator->messages()
+        //     ], 422);
+        //    } else {
+             
+        //    }
 
-                    return response()->json([
-                        'status' => 200,
-                        'message' => 'Pizza Updated Successfully'
-                    ], 200);
-                   } else {
-                    return response()->json([
-                        'status' => 404,
-                        'message' => 'No Such Record Found'
-                    ], 404);
-                   }
-           }
+        $pizza = Pizza::find($id);
+    
+        if($pizza){
+            $pizza->update([
+                'name' => $request->name,
+                'type' => $request->type,
+                'base' => $request->base
+            ]);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Pizza Updated Successfully'
+            ], 200);
+           } 
+
+            return response()->json([
+                'status' => 404,
+                'message' => 'No Such Record Found'
+            ], 404);
+           
 
     }
 
