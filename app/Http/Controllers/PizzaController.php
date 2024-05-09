@@ -13,16 +13,21 @@ class PizzaController extends Controller
     public function index(){
         $pizzas = Pizza::all();
 
-        if($pizzas->count() > 0) {
-            return response()->json([
-                'status' => 200,
-                'pizzas' => $pizzas
-            ], 200);
-        }
-            return response()->json([
-                'status' => 404, 
-                'pizzas' => 'No record found'
-            ]);
+        // if($pizzas->count() > 0) {
+        //     return response()->json([
+        //         'status' => 200,
+        //         'pizzas' => $pizzas
+        //     ], 200);
+        // }
+        //     return response()->json([
+        //         'status' => 404, 
+        //         'pizzas' => 'No record found'
+        //     ]);
+
+
+        return response()->json([
+            'pizzas' => $pizzas
+        ], 200);
               
     }
 
@@ -89,7 +94,7 @@ class PizzaController extends Controller
         }
             return response()->json([
                 'status' => 404, 
-                'stew' => 'No record found'
+                'pizza' => 'No record found'
             ]);
         
         
