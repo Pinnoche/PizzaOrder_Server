@@ -30,6 +30,7 @@ class PizzaRequest extends FormRequest
 
     public function messages() {
         return [
+            'name.required' => 'Please input your name',
             'type.required' => 'Please Select your Pizza type',
             'base.required' => 'Please Select your Pizza base',
         ];
