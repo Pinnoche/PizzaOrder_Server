@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Admin\AdminController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\Staff\StaffRegisterController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\Staff\StaffLoginLogoutController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
@@ -35,3 +39,15 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
+
+Route::prefix('admin')->group( function () {
+    Route::post('/login', [AdminController::class,'store']);
+    Route::post('/logout', [AdminController::class,'destroy'])->middleware(['auth', 'role:admin']);
+});
+
+Route::prefix('staff')->group( function () {
+    Route::get('/', [StaffLoginLogoutController::class, 'index'])->middleware('role:admin');
+    Route::post('/login', [StaffLoginLogoutController::class,'store']);
+    Route::post('/register', [StaffRegisterController::class,'store'])->middleware(['auth', 'role:admin']);
+    Route::post('/logout', [StaffLoginLogoutController::class,'destroy'])->middleware(['auth', 'role:staff']);
+});

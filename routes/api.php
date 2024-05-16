@@ -5,14 +5,33 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PizzaController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    if(!$user->hasRole(['admin', 'staff'])){
+        return response()->json($user);
+    } 
 });
 
-Route::controller(PizzaController::class)->group(function () {
-    Route::get('/pizzas', 'index')->middleware('auth');
-    Route::post('/pizzas', 'store');
-    Route::get('/pizzas/{id}', 'show');
-    Route::get('/pizzas/{id}/edit', 'edit');
-    Route::patch('/pizzas/{id}/edit', 'update');
-    Route::delete('/pizzas/{id}/delete', 'destroy')->middleware('auth');
+Route::middleware(['auth:sanctum'])->get('/admin', function (Request $request) {
+   $user = $request->user();
+    if ($user->hasRole('admin')) {
+        return response()->json($user);
+    }
 });
+
+Route::middleware(['auth:sanctum'])->get('/staffs', function (Request $request) {
+    $user = $request->user();
+     if ($user->hasRole('staff')) {
+         return response()->json($user);
+     }
+ });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/pizzas', [PizzaController::class, 'index']);
+    Route::post('/pizzas', [PizzaController::class, 'store']);
+    Route::get('/pizzas/{pizza}', [PizzaController::class, 'show']);
+    Route::get('/pizzas/{pizza}/edit', [PizzaController::class, 'edit']);
+    Route::patch('/pizzas/{pizza}/edit', [PizzaController::class, 'update']);
+    Route::delete('/pizzas/{pizza}/delete', [PizzaController::class, 'destroy']);
+});
+
+
