@@ -19,16 +19,13 @@ class PizzaController extends Controller
     }
 
     public function store(PizzaRequest $request) {
-        //          return response()->json([
-        //              'status' => 500,
-        //              'message' => 'Somethng Went Wrong'
-        //          ], 500);
-        
-        $pizza = Pizza::create([
+
+        $pizza = auth()->user()->pizzas()->create([
                      'name' => $request->name,
                      'type' => $request->type,
                      'base' => $request->base,
                  ]);
+                 $pizza->id = auth()->user()->id;
                      return response()->json([
                          'message' => 'Pizza Uploaded Successfully'
                      ], 200);

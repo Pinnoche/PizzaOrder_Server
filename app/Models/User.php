@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Pizza;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function pizzas()
+    {
+        return $this->hasMany(Pizza::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
