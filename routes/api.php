@@ -33,7 +33,7 @@ Route::group(['middleware' =>'auth'],function () {
     Route::get('/pizzas/{pizza}', [PizzaController::class, 'show']);
     Route::get('/pizzas/{pizza}/edit', [PizzaController::class, 'edit']);
     Route::patch('/pizzas/{pizza}/edit', [PizzaController::class, 'update']);
-    Route::delete('/pizzas/{pizza}/delete', [PizzaController::class, 'destroy'])->middleware(['role:admin', 'role:staff']);
+    Route::delete('/pizzas/{pizza}/delete', [PizzaController::class, 'destroy']);
 });
 
 

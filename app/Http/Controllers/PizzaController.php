@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pizza;
 use Illuminate\Http\Request;
-use App\Http\Requests\PizzaRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PizzaController;
+use App\Http\Requests\DeletePizzaRequest;
+use App\Http\Requests\UpdatePizzaRequest;
 use Illuminate\Support\Facades\Validator;
 
 class PizzaController extends Controller
@@ -18,7 +20,7 @@ class PizzaController extends Controller
         ], 200);
     }
 
-    public function store(PizzaRequest $request) {
+    public function store(UpdatePizzaRequest $request) {
 
         $pizza = auth()->user()->pizzas()->create([
                      'name' => $request->name,
@@ -44,7 +46,7 @@ class PizzaController extends Controller
             ], 200);
     }
 
-    public function update(PizzaRequest $request, Pizza $pizza){
+    public function update(UpdatePizzaRequest $request, Pizza $pizza){
             $pizza->update([
                 'name' => $request->name,
                 'type' => $request->type,
@@ -56,9 +58,10 @@ class PizzaController extends Controller
             ], 200);
     }
 
-    public function destroy(Pizza $pizza){
-            $pizza->delete();
+    public function destroy(DeletePizzaRequest $request, Pizza $pizza ){
 
+            $pizza->delete();
+     
             return response()->json([
                 'message' => 'Pizza has been Successfully deleted'
             ], 200);
