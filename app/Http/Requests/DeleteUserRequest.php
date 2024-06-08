@@ -2,16 +2,20 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePizzaRequest extends FormRequest
+class DeleteUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        if(Auth::user()->hasRole('admin')){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -22,18 +26,7 @@ class UpdatePizzaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:200',
-            'type' => 'required',
-            'base' => 'required',
+            //
         ];
     }
-
-    public function messages() {
-        return [
-            'name.required' => 'Please input your name',
-            'type.required' => 'Please Select your Pizza type',
-            'base.required' => 'Please Select your Pizza base',
-        ];
-    }
-
 }

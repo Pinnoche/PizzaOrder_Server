@@ -11,7 +11,6 @@ use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
-    //login function 
     public function store(Request $request ) {
         if(Auth::attempt($request->only('email', 'password'))){
             if (Auth::user()->hasRole('admin')) {
@@ -20,11 +19,9 @@ class AdminController extends Controller
             }
             return response()->json(['message' => 'Not an Admin'],404);
         }
-    
+
     }
 
-
-    //logout function
     public function destroy(Request $request) {
         if(Auth::check() && Auth::user()->hasRole('admin')){
             Auth::logout();
@@ -32,6 +29,6 @@ class AdminController extends Controller
             $request->session()->regenerateToken();
             return response()->noContent(); 
         }
-        
+
     }
 }

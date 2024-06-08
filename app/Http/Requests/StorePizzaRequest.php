@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePizzaRequest extends FormRequest
+class StorePizzaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,4 +36,15 @@ class UpdatePizzaRequest extends FormRequest
         ];
     }
 
+    protected function withValidator($validator) {
+        $validator->after(function ($validator) {
+            if(!$validator->failed()){
+                auth()->user()->pizzas()->create([
+                    'name' => $this->name,
+                    'type' => $this->type,
+                    'base' => $this->base,
+                ]);
+            }
+        });
+    }
 }

@@ -20,12 +20,14 @@ class StaffRegisterController extends Controller
             'password' => ['required',  'min:8'],
             'confirm_password' => 'required | same:password'
         ]);
-
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ])->assignRole('staff');
+        if(Auth::user()->hasRole('admin')){
+            $user = User::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ])->assignRole('staff');
+        }
+        
 
         event(new Registered($user));
         Auth::login($user);

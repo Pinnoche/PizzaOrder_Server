@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pizza;
 use App\Models\User;
 
-class UserController extends Controller
+class UserProfileController extends Controller
 {
     public function index(){
         if(auth()->check()){

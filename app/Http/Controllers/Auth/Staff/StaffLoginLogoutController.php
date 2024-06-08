@@ -13,8 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StaffLoginLogoutController extends Controller
 {
-    //get all staffs
-    public function index(Request $request) {
+    public function index() {
         $staffRole = Role::where('name', 'staff')->first();
 
         $staff = $staffRole->users()->get();
@@ -22,7 +21,7 @@ class StaffLoginLogoutController extends Controller
         return $staff;
         
     }
-     //staffs login function 
+
      public function store(Request $request) {
         if(Auth::attempt($request->only('email', 'password'))){
             if (Auth::user()->hasRole('staff')) {
@@ -34,7 +33,6 @@ class StaffLoginLogoutController extends Controller
     
     }
 
-    //staffs logout function
     public function destroy(Request $request): Response {
         if(Auth::check() && Auth::user()->hasRole('staff')){
             Auth::logout();

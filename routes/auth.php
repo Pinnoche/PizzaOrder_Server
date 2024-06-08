@@ -2,6 +2,7 @@
 
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\Admin\AdminController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -40,14 +41,19 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
-Route::prefix('admin')->group( function () {
+Route::prefix('admin')->group( function() {
     Route::post('/login', [AdminController::class,'store']);
-    Route::post('/logout', [AdminController::class,'destroy'])->middleware(['auth', 'role:admin']);
+    Route::post('/logout', [AdminController::class,'destroy']);
 });
 
-Route::prefix('staff')->group( function () {
+Route::prefix('staff')->group( function() {
     Route::get('/', [StaffLoginLogoutController::class, 'index'])->middleware('role:admin');
     Route::post('/login', [StaffLoginLogoutController::class,'store']);
-    Route::post('/register', [StaffRegisterController::class,'store'])->middleware(['auth', 'role:admin']);
-    Route::post('/logout', [StaffLoginLogoutController::class,'destroy'])->middleware(['auth', 'role:staff']);
+    Route::post('/register', [StaffRegisterController::class,'store']);
+    Route::post('/logout', [StaffLoginLogoutController::class,'destroy']);
+});
+
+Route::prefix('user')->group(function() {
+    Route::get('/', [UserController::class, 'index']);
+    Route::delete('/{user}/delete', [UserController::class, 'destroy']);
 });

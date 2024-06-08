@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pizza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StorePizzaRequest;
 use App\Http\Controllers\PizzaController;
 use App\Http\Requests\DeletePizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
@@ -20,14 +21,8 @@ class PizzaController extends Controller
         ], 200);
     }
 
-    public function store(UpdatePizzaRequest $request) {
-
-        $pizza = auth()->user()->pizzas()->create([
-                     'name' => $request->name,
-                     'type' => $request->type,
-                     'base' => $request->base,
-                 ]);
-                 $pizza->id = auth()->user()->id;
+    public function store(StorePizzaRequest $request) {
+                 
                      return response()->json([
                          'message' => 'Pizza Uploaded Successfully'
                      ], 200);
