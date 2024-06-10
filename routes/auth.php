@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\Admin\AdminController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\Staff\StaffController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -47,10 +48,11 @@ Route::prefix('admin')->group( function() {
 });
 
 Route::prefix('staff')->group( function() {
-    Route::get('/', [StaffLoginLogoutController::class, 'index'])->middleware('role:admin');
+    Route::get('/', [StaffController::class, 'index'])->middleware('role:admin');
     Route::post('/login', [StaffLoginLogoutController::class,'store']);
     Route::post('/register', [StaffRegisterController::class,'store']);
     Route::post('/logout', [StaffLoginLogoutController::class,'destroy']);
+    Route::delete('/{staff}/delete', [StaffController::class, 'destroy']);
 });
 
 Route::prefix('user')->group(function() {

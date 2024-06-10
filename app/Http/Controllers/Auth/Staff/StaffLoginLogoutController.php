@@ -13,15 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class StaffLoginLogoutController extends Controller
 {
-    public function index() {
-        $staffRole = Role::where('name', 'staff')->first();
-
-        $staff = $staffRole->users()->get();
-
-        return $staff;
-        
-    }
-
      public function store(Request $request) {
         if(Auth::attempt($request->only('email', 'password'))){
             if (Auth::user()->hasRole('staff')) {
