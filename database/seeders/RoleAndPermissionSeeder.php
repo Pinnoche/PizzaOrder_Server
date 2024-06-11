@@ -15,10 +15,8 @@ class RoleAndPermissionSeeder extends Seeder
     public function run(): void
     {
         Permission::create(['name' => 'create-users']);
-        Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'delete-users']);
         Permission::create(['name' => 'create-staff']);
-        Permission::create(['name' => 'edit-staff']);
         Permission::create(['name' => 'delete-staff']);
         Permission::create(['name' => 'delete-pizza']);
 
@@ -27,7 +25,6 @@ class RoleAndPermissionSeeder extends Seeder
 
         $adminRole->givePermissionTo([
             'create-staff',
-            'edit-staff',
             'delete-staff',
             'delete-pizza'
         ]);
