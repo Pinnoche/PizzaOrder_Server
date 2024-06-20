@@ -30,9 +30,7 @@ class PizzaController extends Controller
 
     public function show(Pizza $pizza){
         // $pizza = Pizza::find($id);
-            return response()->json([
-                'pizza' => $pizza
-            ], 200); 
+        return response()->json(['pizza' => $pizza], 200); 
     }
 
     public function edit(Pizza $pizza){
