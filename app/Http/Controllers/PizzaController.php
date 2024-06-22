@@ -34,9 +34,7 @@ class PizzaController extends Controller
     }
 
     public function edit(Pizza $pizza){
-            return response()->json([
-                'pizza' => $pizza
-            ], 200);
+            return response()->json(['pizza' => $pizza], 200);
     }
 
     public function update(UpdatePizzaRequest $request, Pizza $pizza){
