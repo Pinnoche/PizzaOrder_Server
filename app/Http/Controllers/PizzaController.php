@@ -10,12 +10,12 @@ use App\Http\Controllers\PizzaController;
 use App\Http\Requests\DeletePizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Resources\PizzaResource;
 
 class PizzaController extends Controller
 {
     public function index(){
-        $pizzas = Pizza::all();
-
+        $pizzas = PizzaResource::collection(Pizza::all());
         return response()->json([
             'pizzas' => $pizzas
         ], 200);
