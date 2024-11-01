@@ -6,7 +6,6 @@ use App\Models\Pizza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePizzaRequest;
-use App\Http\Controllers\PizzaController;
 use App\Http\Requests\DeletePizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use Illuminate\Support\Facades\Validator;
