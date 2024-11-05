@@ -9,11 +9,12 @@ use App\Http\Resources\Resources\PizzaResource;
 
 class UserProfileController extends Controller
 {
-    public function index(){
-        if(auth()->check()){
+    public function index()
+    {
+        if (auth()->check()) {
             $user = auth()->user();
             $pizzas = PizzaResource::collection($user->pizzas()->get());
         }
-        return response()->json(['pizzas' => $pizzas],200);
+        return response()->json(compact('user', 'pizzas'));
     }
 }
